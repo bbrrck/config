@@ -1,0 +1,1 @@
+oh-my-posh init nu --config .\oh-my-posh\config.omp.json --print | save .\nu\oh-my-posh.nu --force
