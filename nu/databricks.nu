@@ -1,25 +1,32 @@
+# Config for Databricks workspace and cluster
 let DEFAULT_DATABRICKS_WORKSPACE = "dnacommondbwsp02n1d02"
 let DEFAULT_DATABRICKS_CLUSTER_ID = "1020-071410-fiqjxuwk"
 
-def hi [] {
-    databricks --profile $DEFAULT_DATABRICKS_WORKSPACE clusters start $DEFAULT_DATABRICKS_CLUSTER_ID
-}
-
+# Config and cache files stored in project root directory
 let DATABRICKS_CONFIG_FILE = "databricks.config.json"
 let DATABRICKS_CACHE_FILE = "databricks.cached.json"
 
+# Start the databricks cluster.
+def "dbx hi" [] {
+    databricks --profile $DEFAULT_DATABRICKS_WORKSPACE clusters start $DEFAULT_DATABRICKS_CLUSTER_ID
+}
+
+# Get the databricks profile from the databricks config file
 def "dbx profile" [] {
     return (open $DATABRICKS_CONFIG_FILE | get profile)
 }
 
+# Get the databricks repo path from the databricks config file
 def "dbx repo-path" [] {
     return (open $DATABRICKS_CONFIG_FILE | get repo-path)
 }
 
+# Get the git remote name from the databricks config file
 def "dbx remote" [] {
     return (open $DATABRICKS_CONFIG_FILE | get remote)
 }
 
+# Get the databricks repo id from the databricks config file or from Databricks
 def "dbx repo-id" [] {
     # try to read the repo id from the cache file
     let repo_id = try {
@@ -39,6 +46,7 @@ def "dbx repo-id" [] {
     return $repo_id
 }
 
+# Update the databricks repo with the latest changes from the remote repo
 def "dbx repo-update" [] {
     let profile =  dbx profile
     let repo_id = dbx repo-id
@@ -52,7 +60,10 @@ def "dbx repo-update" [] {
     databricks --profile $profile repos update $repo_id --branch $branch
 }
 
-def "dbx push" [commit_message] {
+# Commit and push changes to the remote repo, then update the databricks repo
+def "dbx push" [
+    commit_message: string # The commit message
+] {
     let profile =  dbx profile
     let repo_id = dbx repo-id
     let branch = git symbolic-ref --short HEAD
@@ -72,4 +83,10 @@ def "dbx push" [commit_message] {
     dbx repo-update
 }
 
-def dbx [] {}
+def dbx [] {
+    print "dbx needs a subcommand. Type 'help dbx' for more details."
+}
+
+## Aliases
+alias hi = dbx hi
+alias pu = dbx push

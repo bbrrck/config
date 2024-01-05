@@ -1,5 +1,8 @@
 # Tibor's Aliases
 
+alias ? = scope aliases
+alias cat = ccat
+
 ## Navigate to local folders
 ### -- pybrickz
 alias ppbr = cd ~/Projects/pybrickz
