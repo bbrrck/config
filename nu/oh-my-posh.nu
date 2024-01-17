@@ -18,23 +18,23 @@ def posh_width [] {
 }
 
 # PROMPTS
-$env.PROMPT_MULTILINE_INDICATOR = (^"C:/Users/tibor.stanko/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe" print secondary $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)")
+$env.PROMPT_MULTILINE_INDICATOR = (^"C:/Users/TIBOR.STANKO/scoop/shims/oh-my-posh.exe" print secondary $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)")
 
 $env.PROMPT_COMMAND = { ||
     # hack to set the cursor line to 1 when the user clears the screen
     # this obviously isn't bulletproof, but it's a start
     let clear = (history | last 1 | get 0.command) == "clear"
 
-    ^"C:/Users/tibor.stanko/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe" print primary $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)" $"--execution-time=(posh_cmd_duration)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=(posh_width)" $"--cleared=($clear)"
+    ^"C:/Users/TIBOR.STANKO/scoop/shims/oh-my-posh.exe" print primary $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)" $"--execution-time=(posh_cmd_duration)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=(posh_width)" $"--cleared=($clear)"
 }
 
 $env.PROMPT_COMMAND_RIGHT = { ||    
-    ^"C:/Users/tibor.stanko/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe" print right $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)" $"--execution-time=(posh_cmd_duration)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=(posh_width)"
+    ^"C:/Users/TIBOR.STANKO/scoop/shims/oh-my-posh.exe" print right $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)" $"--execution-time=(posh_cmd_duration)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=(posh_width)"
 }
 
 if "false" == "true" {
     $env.TRANSIENT_PROMPT_COMMAND = { ||
-        ^"C:/Users/tibor.stanko/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe" print transient $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)" $"--execution-time=(posh_cmd_duration)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=(posh_width)"
+        ^"C:/Users/TIBOR.STANKO/scoop/shims/oh-my-posh.exe" print transient $"--config=($env.POSH_THEME)" --shell=nu $"--shell-version=($env.POSH_SHELL_VERSION)" $"--execution-time=(posh_cmd_duration)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=(posh_width)"
     }
 }
 

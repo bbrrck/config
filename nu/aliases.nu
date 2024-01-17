@@ -45,3 +45,6 @@ alias gm = git merge
 alias gpl = git pull
 alias gps = git push
 alias gs = git status
+
+# Python virtualenv
+alias venv = overlay use .venv\Scripts\activate.nu
