@@ -62,6 +62,13 @@ alias gpl = git pull
 alias gps = git push
 alias gs = git status
 
+def sync [commit_message="auto sync"] {
+    git pull
+    git add . 
+    git commit -m $commit_message
+    git push
+}
+
 ## Python virtualenv
 alias venv = overlay use .venv\Scripts\activate.nu
 alias d = deactivate
