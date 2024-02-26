@@ -48,19 +48,22 @@ alias dclqa01 = start https://adb-4321108820673507.7.azuredatabricks.net/
 alias dpa01 = start https://adb-1854015508783085.5.azuredatabricks.net/
 ### -- Databricks/
 alias ddev02 = start https://adb-2405775634121026.6.azuredatabricks.net/
+### -- Databricks/prod
+alias dprod02 = start https://adb-6461475676310004.4.azuredatabricks.net/
 ### -- Dataiku/cloud01
 alias cloud01 = start https://dataikucloud01.zurich.com/
 ### -- Dataiku/automation01
 alias automation01 = start https://dataikuautomation01.zurich.com/
 
 ## Git shortcuts
-alias ga = git add 
-alias gch = git checkout
+alias ga = git add
+alias gb = git branch --all
 alias gc = git commit
+alias gf = git pull
 alias gm = git merge
-alias gpl = git pull
-alias gps = git push
+alias gp = git push
 alias gs = git status
+alias gx = git checkout
 
 def sync [commit_message="auto sync"] {
     git pull
