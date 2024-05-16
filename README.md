@@ -21,7 +21,7 @@
     ```
 
 3. Open the nushell config file: `nvim $nu.config-path`
-4. Add the following to the end: `source ~/Projects/config/nu/_main.nu`.
+4. Add the following to the end: `source ~/Projects/config/nu/_config.nu`.
 
 ## Apps
 
