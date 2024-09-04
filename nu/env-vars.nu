@@ -8,9 +8,14 @@ $env.PIP_CONFIG_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\pip\\pip.ini'
 $env.DNA_METASTORE_DEV_MODE = 'TRUE'
 $env.DNA_METASTORE_USE_QA_DATABASE = 'FALSE'
 $env.DBX_ENV = 'dev'
+$env.KEY_VAULT = 'dnacommonkeyvault01n1d02'
 
 #### starship
 # This *does not* work
 # $env.STARSHIP_CONFIG = '~\Projects\config\starship\starship.toml'
 # This *does* work
 $env.STARSHIP_CONFIG = 'C:\\Users\\tibor.stanko\\Projects\\config\\starship\\starship.toml'
+
+#### zurich certificates
+$env.SSL_CERT_FILE = 'C:\\Users\\TIBOR.STANKO\\Projects\\config\\certificates\\zurich-cert.pem'
+

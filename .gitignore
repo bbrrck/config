@@ -1,1 +1,5 @@
+.databricks
+.env
+.vscode
+certificates/*.pem
 nu/env-vars-secret.nu
