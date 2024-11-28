@@ -17,5 +17,7 @@ $env.KEY_VAULT = 'dnacommonkeyvault01n1d02'
 $env.STARSHIP_CONFIG = 'C:\\Users\\tibor.stanko\\Projects\\config\\starship\\starship.toml'
 
 #### zurich certificates
-$env.SSL_CERT_FILE = 'C:\\Users\\TIBOR.STANKO\\Projects\\config\\certificates\\zurich-cert.pem'
+$env.SSL_CERT_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
 
+#### custom azure artifact feeds
+# $env.UV_EXTRA_INDEX_URL = $'https://($env.AZURE_ARTIFACTS_TOKEN)@pkgs.dev.azure.com/zna-predictive-analytics/dna-packages/_packaging/dna-packages/pypi/upload/'
