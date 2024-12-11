@@ -21,3 +21,6 @@ $env.SSL_CERT_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\z
 
 #### custom azure artifact feeds
 # $env.UV_EXTRA_INDEX_URL = $'https://($env.AZURE_ARTIFACTS_TOKEN)@pkgs.dev.azure.com/zna-predictive-analytics/dna-packages/_packaging/dna-packages/pypi/upload/'
+
+#### uv
+$env.UV_KEYRING_PROVIDER = "subprocess"
