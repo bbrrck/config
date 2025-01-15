@@ -1,6 +1,6 @@
 # Tibor's Windows Configuration Files
 
-## Pre-requisites
+## Prerequisites
 
 * Get [scoop](https://scoop.sh/)
 
@@ -61,7 +61,6 @@ scoop bucket add nerd-fonts
 | pshazz                 | 0.2022.03.09 | main       | 2024-01-17 22:55:27 |                |
 | psutils                | 0.2023.06.28 | main       | 2024-01-17 22:59:57 |                |
 | python                 | 3.12.1       | main       | 2024-01-18 13:58:53 |                |
-| quarto                 |              |            | 2024-01-17 22:24:28 | Install failed |
 | starship               | 1.17.1       | main       | 2024-01-17 23:12:44 |                |
 | touch                  | 0.2018.07.25 | main       | 2024-01-17 23:13:59 |                |
 | vscode                 | 1.85.1       | extras     | 2024-01-17 22:28:49 |                |
