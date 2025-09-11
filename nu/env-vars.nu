@@ -1,3 +1,5 @@
+$env.ADM_USERNAME = 'adm-TISTANKO'
+
 #### pip
 # This *does not* work
 # $env.PIP_CONFIG_FILE = '~/Projects/config/pip/pip.ini'
@@ -23,4 +25,10 @@ $env.SSL_CERT_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\z
 # $env.UV_EXTRA_INDEX_URL = $'https://($env.AZURE_ARTIFACTS_TOKEN)@pkgs.dev.azure.com/zna-predictive-analytics/dna-packages/_packaging/dna-packages/pypi/upload/'
 
 #### uv
+# $env.UV_INDEX_DNA_PACKAGES_PASSWORD = ''
+$env.UV_INDEX_DNA_PACKAGES_USERNAME = 'VssSessionToken'
 $env.UV_KEYRING_PROVIDER = "subprocess"
+
+#### azure cli - disable ssl
+$env.ADAL_PYTHON_SSL_NO_VERIFY = 1
+$env.AZURE_CLI_DISABLE_CONNECTION_VERIFICATION = 1

@@ -64,7 +64,7 @@ alias gc = git commit
 alias gf = git pull
 alias gm = git merge
 alias gp = git push
-alias gs = git status
+# alias gs = git status
 alias gx = git checkout
 
 def sync [commit_message="auto sync"] {
@@ -77,3 +77,14 @@ def sync [commit_message="auto sync"] {
 ## Python virtualenv
 alias venv = overlay use .venv\Scripts\activate.nu
 alias d = deactivate
+
+alias rf = uv run ruff check --fix
+
+alias tf = terraform
+
+def admire [] {
+    cd C:\Users\TIBOR.STANKO\Projects\admire
+    uv run admire
+}
+
+alias adm = admire

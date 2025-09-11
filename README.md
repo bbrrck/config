@@ -9,6 +9,13 @@
 1. Install [nushell](https://www.nushell.sh/): `scoop install nushell`
 2. Install [starship](https://starship.rs/): `scoop install starship`
 3. *(Optional)* Install [neovim](https://neovim.io/): `scoop install neovim`
+4. Run the following commands to initialize starship for nushell:
+
+   ```bash
+   mkdir ~/.cache/starship
+   starship init nu > ~/.cache/starship/init.nu
+   ```
+
 
 ## Setup
 
