@@ -8,6 +8,9 @@ source databricks.nu
 source env-vars-secret.nu
 source env-vars.nu
 
+#### Path
+source path.nu
+
 #### Prompt
 # source oh-my-posh.nu
 source starship.nu

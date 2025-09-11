@@ -9,7 +9,12 @@ alias ?x = scope externs
 alias ?m = scope modules
 alias ?v = scope variables
 
-alias cat = ccat
+let os_name = ($nu.os-info | get name);
+match $os_name {
+    "windows" => {
+        alias cat = ccat
+    }
+}
 
 ## Print config paths
 alias nuc = echo $nu.config-path

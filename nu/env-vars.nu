@@ -1,24 +1,20 @@
-# Get the name of the operating system
 let os_name = ($nu.os-info | get name);
-
-# Use a match statement to branch based on the OS name
 match $os_name {
     "windows" => {
-        print "Running on Windows"
         $env.PIP_CONFIG_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\pip\\pip.ini'
         $env.STARSHIP_CONFIG = 'C:\\Users\\tibor.stanko\\Projects\\config\\starship\\starship.toml'
         $env.SSL_CERT_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
         $env.REQUESTS_CA_BUNDLE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
     },
     "macos" => {
-        print "Running on macOS"
-        $env.PIP_CONFIG_FILE = "~/Projects/config/pip/pip.toml"  
-        $env.STARSHIP_CONFIG = "~/Projects/config/starship/starship.toml"
-        $env.SSL_CERT_FILE = "~/Projects/config/certificates/certs.pem"  
-        $env.REQUESTS_CA_BUNDLE = "~/Projects/config/certificates/certs.pem"
+        $env.USERNAME = (whoami)
+        $env.PIP_CONFIG_FILE = $env.HOME + "/Projects/config/pip/pip.toml"  
+        $env.STARSHIP_CONFIG = $env.HOME + "/Projects/config/starship/starship.toml"
+        $env.SSL_CERT_FILE = $env.HOME + "/Projects/config/certificates/certs.pem"  
+        $env.REQUESTS_CA_BUNDLE = $env.HOME + "/Projects/config/certificates/certs.pem"
     },
     "linux" => {
-        print "Running on Linux"
+        $env.USERNAME = (whoami)
         $env.PIP_CONFIG_FILE = "~/Projects/config/pip/pip.toml"  
         $env.STARSHIP_CONFIG = "~/Projects/config/starship/starship.toml"
         $env.SSL_CERT_FILE = "~/Projects/config/certificates/certs.pem"  
