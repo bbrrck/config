@@ -83,7 +83,7 @@ alias rf = uv run ruff check --fix
 alias tf = terraform
 
 def admire [] {
-    cd C:\Users\TIBOR.STANKO\Projects\admire
+    cd ~/Projects/admire
     uv run admire
 }
 
