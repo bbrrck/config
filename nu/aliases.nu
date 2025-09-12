@@ -93,3 +93,8 @@ def admire [] {
 }
 
 alias adm = admire
+
+def par [] {
+    cd ~/Projects/admire
+    uv run par
+}
