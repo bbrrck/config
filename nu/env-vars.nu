@@ -3,8 +3,10 @@ match $os_name {
     "windows" => {
         $env.PIP_CONFIG_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\pip\\pip.ini'
         $env.STARSHIP_CONFIG = 'C:\\Users\\tibor.stanko\\Projects\\config\\starship\\starship.toml'
-        $env.SSL_CERT_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
-        $env.REQUESTS_CA_BUNDLE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
+        # $env.SSL_CERT_FILE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
+        # $env.REQUESTS_CA_BUNDLE = 'C:\\Users\\tibor.stanko\\Projects\\config\\certificates\\zurich-cert.pem'
+        $env.SSL_CERT_FILE = "C:\\Users\\TIBOR.STANKO\\scoop\\apps\\git\\current\\mingw64\\etc\\ssl\\certs\\ca-bundle.crt"
+        $env.REQUESTS_CA_BUNDLE = "C:\\Users\\TIBOR.STANKO\\scoop\\apps\\git\\current\\mingw64\\etc\\ssl\\certs\\ca-bundle.crt"
     },
     "macos" => {
         $env.USERNAME = (whoami)
