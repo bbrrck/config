@@ -8,7 +8,12 @@ match $os_name {
         # --- prepend to path ---
         # $env.PATH = ($env.PATH | split row (char esep) | prepend "/path/to/your/new/directory")
 
-        $env.PATH = ($env.PATH | split row (char esep) | append "~/.local/bin/")
+        $env.PATH = (
+            $env.PATH
+            | split row (char esep)
+            | append "~/.local/bin/"
+            | append "/usr/local/bin/"
+        )
     },
     "linux" => {
     },
