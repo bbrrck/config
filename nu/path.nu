@@ -13,6 +13,7 @@ match $os_name {
             | split row (char esep)
             | append "~/.local/bin/"
             | append "/usr/local/bin/"
+            | append "/opt/homebrew/bin/"
         )
     },
     "linux" => {
@@ -21,5 +22,3 @@ match $os_name {
         print $"Running on an unknown OS: ($os_name)"
     }
 }
-
-
