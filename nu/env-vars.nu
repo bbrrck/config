@@ -43,3 +43,7 @@ $env.UV_KEYRING_PROVIDER = "subprocess"
 # --- azure cli ---
 $env.ADAL_PYTHON_SSL_NO_VERIFY = 1
 $env.AZURE_CLI_DISABLE_CONNECTION_VERIFICATION = 1
+
+# --- claude code ---
+$env.CLAUDE_CODE_USE_BEDROCK = '1'
+$env.CLAUDE_CODE_SKIP_BEDROCK_AUTH = '1'

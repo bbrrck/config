@@ -1,18 +1,20 @@
-# pybrickz
+# --- pybrickz ---
 $env.DNA_METASTORE_PASSWORD = 'REDACTED'
 
-# Azure DevOps
-# --- token for the organization 'TiborStanko'
+# --- azure devops ---
 $env.AZURE_DEV_OPS_TOKEN_TIBORSTANKO = 'REDACTED'
-# --- token for the organization 'ZNA Predictive Analytics'
 $env.AZURE_DEV_OPS_TOKEN_ZNA_PREDICTIVE_ANALYTICS = 'REDACTED'
 $env.AZURE_ARTIFACTS_TOKEN = 'REDACTED'
 $env.AZURE_DEV_OPS_TOKEN = $env.AZURE_DEV_OPS_TOKEN_ZNA_PREDICTIVE_ANALYTICS
 
-# Zurich LLM Services (Lounge)
+# --- zurich llm lounge ---
 $env.ZURICHAT_CLIENT_ID = "REDACTED"
 $env.ZURICHAT_CLIENT_SECRET = "REDACTED"
 
-# Github (ZNA)
-# --- token for the organization 'ZurichNA'
+# --- claude code (using zurich llms) ---
+$env.ANTHROPIC_BEDROCK_BASE_URL = 'REDACTED'
+$env.ANTHROPIC_AUTH_TOKEN = 'REDACTED'
+$env.ANTHROPIC_MODEL = 'REDACTED'
+
+# --- github (zna) ---
 $env.GITHUB_TOKEN = 'REDACTED'
