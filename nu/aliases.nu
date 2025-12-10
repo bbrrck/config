@@ -83,9 +83,23 @@ def sync [commit_message="auto sync"] {
 alias venv = overlay use .venv\Scripts\activate.nu
 alias d = deactivate
 
-alias rf = uv run ruff check --fix
+## Common commands
+def codechecks [] {
+    print "=== RUNNING CODE CHECKS ==="
+    print "--- RUFF FORMAT ---"
+    uv run ruff format
+    print "--- RUFF CHECK ---"
+    uv run ruff check --fix
+    print "--- PYREFLY CHECK ---"
+    uv run pyrefly check
+    print "=== CODE CHECKS COMPLETED ==="
+}
 
+alias rf = uv run ruff format
+alias rc = uv run ruff check
+alias pf = uv run pyrefly check
 alias tf = terraform
+alias cc = codechecks
 
 def admire [] {
     cd ~/Projects/admire
