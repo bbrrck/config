@@ -12,9 +12,13 @@
 ## MacOS
 
 ```shell
-security export -t certs -f pemseq -k /System/Library/Keychains/SystemRootCertificates.keychain -o "$HOME/Projects/config/certificates/bundleCA.pem"  
-security export -t certs -f pemseq -k /Library/Keychains/System.keychain -o "$HOME/Projects/config/certificates/selfSignedCAbundle.pem"
-cat "$HOME/Projects/config/certificates//bundleCA.pem" "$HOME/Projects/config/certificates/selfSignedCAbundle.pem" >> "$HOME/Projects/config/certificates/certs.pem"
-export SSL_CERT_FILE="$HOME/Projects/config/certificates/certs.pem"  
-export REQUESTS_CA_BUNDLE="$HOME/Projects/config/certificates/certs.pem"
+$env.CERT_DIR = $"($env.HOME)/Projects/config/certificates"
+$env.CERT_ROOT = $"($env.CERT_DIR)/bundleCA.pem"
+$env.CERT_SELF = $"($env.CERT_DIR)/selfSignedCAbundle.pem"
+$env.CERT_BOTH = $"($env.CERT_DIR)/certs.pem"
+security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain | save $"(env.CERT_ROOT)"
+security find-certificate -a -p /Library/Keychains/System.keychain -o $env.CERT_SELF
+cat $CERT_ROOT $CERT_SELF >> $CERT_BOTH
+export SSL_CERT_FILE=$CERT_BOTH
+export REQUESTS_CA_BUNDLE=$CERT_BOTH
 ```
