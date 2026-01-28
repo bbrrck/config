@@ -1,10 +1,14 @@
-# Tibor's Windows Configuration Files
+# Tibor Configuration Files
 
-## Prerequisites
+## Windows
+
+## Windows
+
+### Prerequisites
 
 * Get [scoop](https://scoop.sh/)
 
-## Installation
+### Installation
 
 1. Install [nushell](https://www.nushell.sh/): `scoop install nushell`
 2. Install [starship](https://starship.rs/): `scoop install starship`
@@ -16,8 +20,7 @@
    starship init nu > ~/.cache/starship/init.nu
    ```
 
-
-## Setup
+### Setup
 
 1. Clone the repo: `gh repo clone bbrrck/config ~/Projects/config`
 2. Create the file `~/Projects/config/nu/env-vars-secret.nu` and add secret environment variables. Example:
@@ -30,7 +33,7 @@
 3. Open the nushell config file: `nvim $nu.config-path`
 4. Add the following to the end: `source ~/Projects/config/nu/_config.nu`.
 
-## Apps
+### Apps
 
 Install any additional packages via scoop. Below is a list for inspiration. This list was generated on 2024-01-18 14:00:00.
 
@@ -40,7 +43,6 @@ To install some of these packages, you will need to include additional scoop buc
 scoop bucket add extras
 scoop bucket add nerd-fonts
 ```
-
 
 | Name                   | Version      | Source     | Updated             | Info           |
 | ---------------------- | ------------ | ---------- | ------------------- | -------------- |
