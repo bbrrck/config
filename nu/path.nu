@@ -11,9 +11,9 @@ match $os_name {
         $env.PATH = (
             $env.PATH
             | split row (char esep)
-            | append "~/.local/bin/"
-            | append "/usr/local/bin/"
-            | append "/opt/homebrew/bin/"
+            | prepend "~/.local/bin/"
+            | prepend "/usr/local/bin/"
+            | prepend "/opt/homebrew/bin/"
         )
     },
     "linux" => {
