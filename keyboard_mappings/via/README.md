@@ -116,3 +116,34 @@ After making changes, you might need to restart Outlook for the changes to take 
 ```bash
 killall 'Microsoft Outlook'
 ```
+
+## Layer 3: Finder & Utilities
+
+Most keys on this layer are transparent (`KC_TRNS`), falling through to the active lower layer.
+
+Actions:
+
+|      | col1                              | col2 | col3 | col4 |
+| ---- | --------------------------------- | ---- | ---- | ---- |
+| row1 | Show/Hide Hidden Files (Finder)   | -    | -    | -    |
+| row2 | -                                 | -    | -    | -    |
+| row3 | -                                 | -    | -    | -    |
+| row4 | -                                 | -    | -    | -    |
+
+Keyboard Shortcuts - QMK codes:
+
+|      | col1          | col2    | col3    | col4    |
+| ---- | ------------- | ------- | ------- | ------- |
+| row1 | S(G(KC_DOT)) | KC_TRNS | KC_TRNS | KC_TRNS |
+| row2 | KC_TRNS       | KC_TRNS | KC_TRNS | KC_TRNS |
+| row3 | KC_TRNS       | KC_TRNS | KC_TRNS | KC_TRNS |
+| row4 | KC_TRNS       | KC_TRNS | KC_TRNS | KC_TRNS |
+
+Keyboard Shortcuts - MacOS keys:
+
+|      | col1 | col2 | col3 | col4 |
+| ---- | ---- | ---- | ---- | ---- |
+| row1 | ⌘⇧.  | -    | -    | -    |
+| row2 | -    | -    | -    | -    |
+| row3 | -    | -    | -    | -    |
+| row4 | -    | -    | -    | -    |

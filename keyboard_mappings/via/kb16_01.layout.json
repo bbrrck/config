@@ -2,7 +2,7 @@
   "name": "KB16-01",
   "vendorProductId": 3490715137,
   "macros": [
-    "Rewrite the text to make it clearer and easier to read while preserving its original meaning. Enhance flow and readability, avoid jargon, and do not add or remove information. Output only the revised text without comments. Formatting rules: 1. Use hyphens (-) instead of dashes. 2. Use single quote instead of curly apostrophe. 3. Ensure the result sounds natural and not overly AI-generated. Here is the original text: {200}{KC_LGUI,KC_V}{200}{KC_ENT}",
+    "",
     "",
     "",
     "",
@@ -65,7 +65,7 @@
       "KC_NO"
     ],
     [
-      "KC_TRNS",
+      "S(G(KC_DOT))",
       "KC_TRNS",
       "KC_TRNS",
       "KC_TRNS",
