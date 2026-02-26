@@ -15,5 +15,8 @@ source path.nu
 # source oh-my-posh.nu
 source starship.nu
 
+#### Git
+source git.nu
+
 # Disable the default banner
 $env.config.show_banner = false
