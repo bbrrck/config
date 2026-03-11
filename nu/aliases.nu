@@ -68,3 +68,5 @@ def par [] {
 def reload [] {
     exec nu
 }
+
+alias j = just
