@@ -1,24 +1,7 @@
 {
   "name": "KB16-01",
   "vendorProductId": 3490715137,
-  "macros": [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-  ],
+  "macros": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   "layers": [
     [
       "LCAG(KC_LEFT)",
@@ -65,7 +48,7 @@
       "KC_NO"
     ],
     [
-      "S(G(KC_DOT))",
+      "LSG(KC_DOT)",
       "KC_TRNS",
       "KC_TRNS",
       "KC_TRNS",
@@ -83,7 +66,7 @@
       "KC_TRNS",
       "KC_TRNS",
       "KC_TRNS",
-      "KC_TRNS",
+      "KC_F20",
       "KC_NO"
     ],
     [

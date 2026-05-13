@@ -1,45 +1,38 @@
-# Find the directory ending with .git in the current directory
-def "gt find-dir" [] {
-    let git_dirs = (ls -a | where name ends-with ".git" | where type == "dir" | get name)
-    # Check if there is exactly one .git directory
-    if ($git_dirs | length) > 1 {
-        error make {
-            msg: "More than one .git directory found. Exiting."}
-    }
-    if ($git_dirs | length) == 0 {
-        error make {msg: "No .git directory found. Exiting."}
-    }
-    # Return the found .git directory
-    return ($git_dirs | get 0)
-}
+# Git Worktree shortcuts
 
-# Add a git worktree for the given branch
-def "gt wt-add" [branch: string] {
-    cd (gt find-dir)
-    # Path for the new worktree, replacing '/' with '-' in the branch name
-    let path = $"../($branch | str replace '/' '-')"
-    print $"Adding worktree for existing branch '($branch)' at path '($path)'"
-    git worktree add $path $branch
-}
-
-# Add a git worktree for the given branch
-def "gt wt-new" [branch: string] {
-    cd (gt find-dir)
-    # Path for the new worktree, replacing '/' with '-' in the branch name
-    let path = $"../($branch | str replace '/' '-')"
-    print $"Adding worktree for new branch '($branch)' at path '($path)'"
-    git worktree add -b $branch $path
-    cd $path
-}
-
-# List all git branches in the current repository
-def "gt branch" [] {
-    cd (gt find-dir)
+def "gw ls" [] {
+    print "-------------"
+    print "Git branches:"
+    print "-------------"
     git branch --all
-
+    print ""
+    print "--------------"
+    print "Git worktrees:"
+    print "--------------"
+    git worktree list
 }
 
-# Show help for the gt command
-def gt [] {
-    help gt
+def "gw add" [branch: string, from: string = "main"] {
+    let path = $branch
+    print $"Adding worktree for existing branch '($branch)' at path '($path)'"
+    git worktree add -b $branch $branch $from
 }
+
+def "gw rm" [branch: string, --force] {
+    print $"Removing worktree for branch '($branch)' [force: ($force)]"
+    git worktree remove $branch --force
+    print $"Removing branch '($branch)'"
+    if $force {
+        git branch -D $branch
+    } else {
+        git branch -d $branch
+    }
+}
+
+def gw [] {
+    help gw
+}
+
+alias gwl = gw ls
+alias gwa = gw add
+alias gwr = gw rm
