@@ -12,10 +12,12 @@ def "gw ls" [] {
     git worktree list
 }
 
-def "gw add" [branch: string, from: string = "main"] {
+def --env "gw add" [branch: string, from: string = "main"] {
     let path = $branch
     print $"Adding worktree for existing branch '($branch)' at path '($path)'"
     git worktree add -b $branch $branch $from
+    cd $path
+    git status
 }
 
 def "gw rm" [branch: string, --force] {

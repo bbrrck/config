@@ -2,7 +2,7 @@
 
 alias ? = echo "?a=aliases, ?c=commands, ?e=$env, ?s=engine-stats, ?x=externs, ?m=modules, ?v=variables"
 alias ?a = scope aliases
-alias ?c = scope commands 
+alias ?c = scope commands
 alias ?e = echo $env
 alias ?s = scope engine-stats
 alias ?x = scope externs
@@ -75,3 +75,5 @@ alias dbxdv = databricks -p dnacommondbwsp02n1d02
 alias dbxqa = databricks -p dnacommondbwsp02n1q02
 alias dbxpr = databricks -p dnacommondbwsp02p1p02
 
+alias p = cd ~/Projects/
+alias pb = cd ~/Projects/pybrickz/
