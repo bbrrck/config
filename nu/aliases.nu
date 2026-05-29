@@ -1,4 +1,5 @@
 # Tibor's Aliases
+source _paths.nu
 
 alias ? = echo "?a=aliases, ?c=commands, ?e=$env, ?s=engine-stats, ?x=externs, ?m=modules, ?v=variables"
 alias ?a = scope aliases
@@ -54,14 +55,14 @@ alias ch = codechecks
 alias cc = claude
 
 def admire [] {
-    cd ~/Projects/admire
+    cd $PATH_ADMIRE
     uv run admire
 }
 
 alias adm = admire
 
 def par [] {
-    cd ~/Projects/admire
+    cd $PATH_ADMIRE
     uv run par
 }
 
@@ -75,5 +76,5 @@ alias dbxdv = databricks -p dnacommondbwsp02n1d02
 alias dbxqa = databricks -p dnacommondbwsp02n1q02
 alias dbxpr = databricks -p dnacommondbwsp02p1p02
 
-alias p = cd ~/Projects/
-alias pb = cd ~/Projects/pybrickz/
+alias p = cd $PATH_PROJECTS
+alias pb = cd $PATH_PYBRICKZ

@@ -17,9 +17,10 @@ $env.ZURICHAT_API_KEY = "REDACTED"
 $env.ANTHROPIC_AUTH_TOKEN = 'REDACTED'
 $env.ANTHROPIC_BASE_URL = 'REDACTED'
 $env.ANTHROPIC_DEFAULT_HAIKU_MODEL = 'us.anthropic.claude-haiku-4-5-20251001-v1:0'
-$env.ANTHROPIC_DEFAULT_OPUS_MODEL = 'us.anthropic.claude-opus-4-6-v1'
+# $env.ANTHROPIC_DEFAULT_OPUS_MODEL = 'us.anthropic.claude-opus-4-6-v1'
+$env.ANTHROPIC_DEFAULT_OPUS_MODEL = 'us.anthropic.claude-opus-4-8'
 $env.ANTHROPIC_DEFAULT_SONNET_MODEL = 'us.anthropic.claude-sonnet-4-6'
-$env.ANTHROPIC_MODEL = $env.ANTHROPIC_DEFAULT_OPUS_MODEL
+$env.ANTHROPIC_MODEL = $env.ANTHROPIC_DEFAULT_SONNET_MODEL
 $env.CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS = 1
 
 # --- github (zna) ---

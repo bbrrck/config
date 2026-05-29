@@ -1,3 +1,5 @@
+source zoxide.nu
+
 #### Custom Aliases
 source aliases.nu
 
