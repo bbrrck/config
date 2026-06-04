@@ -75,6 +75,3 @@ alias j = just
 alias dbxdv = databricks -p dnacommondbwsp02n1d02
 alias dbxqa = databricks -p dnacommondbwsp02n1q02
 alias dbxpr = databricks -p dnacommondbwsp02p1p02
-
-alias p = cd $PATH_PROJECTS
-alias pb = cd $PATH_PYBRICKZ
