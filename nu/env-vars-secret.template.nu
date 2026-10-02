@@ -14,12 +14,12 @@ $env.ZURICHAT_CLIENT_SECRET = "REDACTED"
 $env.ZURICHAT_API_KEY = "REDACTED"
 
 # --- claude code (using zurich llms) ---
+$env.ZURICH_GEN_AI_USE_CASE = "ETAI-Personal"
 $env.ANTHROPIC_AUTH_TOKEN = 'REDACTED'
 $env.ANTHROPIC_BASE_URL = 'REDACTED'
 $env.ANTHROPIC_DEFAULT_HAIKU_MODEL = 'us.anthropic.claude-haiku-4-5-20251001-v1:0'
-# $env.ANTHROPIC_DEFAULT_OPUS_MODEL = 'us.anthropic.claude-opus-4-6-v1'
-$env.ANTHROPIC_DEFAULT_OPUS_MODEL = 'us.anthropic.claude-opus-4-8'
-$env.ANTHROPIC_DEFAULT_SONNET_MODEL = 'us.anthropic.claude-sonnet-4-6'
+$env.ANTHROPIC_DEFAULT_OPUS_MODEL = 'us.anthropic.claude-opus-5-5'
+$env.ANTHROPIC_DEFAULT_SONNET_MODEL = 'us.anthropic.claude-sonnet-5'
 $env.ANTHROPIC_MODEL = $env.ANTHROPIC_DEFAULT_SONNET_MODEL
 $env.CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS = 1
 
@@ -30,3 +30,6 @@ $env.GITHUB_TOKEN = 'REDACTED'
 $env.DATABRICKS_CLIENT_ID = "REDACTED"
 $env.DATABRICKS_CLIENT_SECRET = "REDACTED"
 $env.DATABRICKS_HOST = "REDACTED"
+
+# --- posit connect ---
+$env.POSIT_CONNECT_API_KEY = "REDACTED"
