@@ -1,5 +1,10 @@
 source zoxide.nu
 
+# Print cwd on every directory change (zoxide jumps included)
+$env.config.hooks.env_change.PWD = (
+  $env.config.hooks.env_change.PWD | append {|_, after| print $"(ansi green)-> ($after)(ansi reset)"}
+)
+
 #### Custom Aliases
 source aliases.nu
 
