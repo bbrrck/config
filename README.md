@@ -2,8 +2,6 @@
 
 ## Windows
 
-## Windows
-
 ### Prerequisites
 
 * Get [scoop](https://scoop.sh/)
