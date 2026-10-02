@@ -117,33 +117,49 @@ After making changes, you might need to restart Outlook for the changes to take 
 killall 'Microsoft Outlook'
 ```
 
-## Layer 3: Finder & Utilities
+## Layer 3: Quarto / reveal.js Presentations
 
-Most keys on this layer are transparent (`KC_TRNS`), falling through to the active lower layer.
+Standard reveal.js/Quarto presentation controls. reveal.js treats
+Left/Up and Right/Down as aliases for prev/next (not separate overview
+navigation), and Esc/O as aliases for toggling overview, so each pair is
+mapped to a single key here rather than duplicated.
+
+The 5th ("side") key on row 3 carries Search (`⌃⇧F`), since it doesn't fit
+the 4x4 action grid. Row 4 col4 (`KC_F20`) is an unrelated legacy binding
+kept as-is. The 5th ("side") key on row 4 carries Toggle Full Screen in
+Browser (`⌘⇧F`), since it doesn't fit the 4x4 action grid either.
 
 Actions:
 
-|      | col1                              | col2 | col3 | col4 |
-| ---- | --------------------------------- | ---- | ---- | ---- |
-| row1 | Show/Hide Hidden Files (Finder)   | -    | -    | -    |
-| row2 | -                                 | -    | -    | -    |
-| row3 | -                                 | -    | -    | -    |
-| row4 | -                                 | -    | -    | -    |
+|      | col1                     | col2                    | col3            | col4              |
+| ---- | ------------------------ | ----------------------- | --------------- | ----------------- |
+| row1 | Previous Slide           | Next Slide              | Prev (no fragments) | Next (no fragments) |
+| row2 | Jump to First Slide      | Jump to Last Slide      | Slide Overview  | Jump to Slide (G) |
+| row3 | Toggle Fullscreen        | Speaker Notes           | Pause (Black)   | Scroll View Mode  |
+| row4 | Toggle Menu              | PDF Export Mode         | Help            | (legacy: KC_F20)  |
 
 Keyboard Shortcuts - QMK codes:
 
-|      | col1          | col2    | col3    | col4    |
-| ---- | ------------- | ------- | ------- | ------- |
-| row1 | S(G(KC_DOT)) | KC_TRNS | KC_TRNS | KC_TRNS |
-| row2 | KC_TRNS       | KC_TRNS | KC_TRNS | KC_TRNS |
-| row3 | KC_TRNS       | KC_TRNS | KC_TRNS | KC_TRNS |
-| row4 | KC_TRNS       | KC_TRNS | KC_TRNS | KC_TRNS |
+|      | col1          | col2           | col3        | col4        |
+| ---- | ------------- | -------------- | ----------- | ----------- |
+| row1 | KC_LEFT       | KC_RGHT        | A(KC_LEFT)  | A(KC_RGHT)  |
+| row2 | S(KC_LEFT)    | S(KC_RGHT)     | KC_O        | KC_G        |
+| row3 | KC_F          | KC_S           | KC_B        | KC_R        |
+| row4 | KC_M          | KC_E           | S(KC_SLSH)  | KC_F20      |
+
+Row 3 side key (Search): `C(S(KC_F))`
+
+Row 4 side key (Toggle Full Screen in Browser): `G(S(KC_F))`
 
 Keyboard Shortcuts - MacOS keys:
 
 |      | col1 | col2 | col3 | col4 |
 | ---- | ---- | ---- | ---- | ---- |
-| row1 | ⌘⇧.  | -    | -    | -    |
-| row2 | -    | -    | -    | -    |
-| row3 | -    | -    | -    | -    |
-| row4 | -    | -    | -    | -    |
+| row1 | ←    | →    | ⌥←   | ⌥→   |
+| row2 | ⇧←   | ⇧→   | O    | G    |
+| row3 | F    | S    | B    | R    |
+| row4 | M    | E    | ⇧/   | -    |
+
+Row 3 side key (Search): ⌃⇧F
+
+Row 4 side key (Toggle Full Screen in Browser): ⌘⇧F
