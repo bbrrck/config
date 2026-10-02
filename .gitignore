@@ -1,6 +1,7 @@
-.DS_Store
 .databricks
+.DS_Store
 .env
 .vscode
+agents/
 certificates/*.pem
 nu/env-vars-secret.nu
