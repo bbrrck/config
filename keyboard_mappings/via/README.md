@@ -109,6 +109,9 @@ defaults write com.microsoft.Outlook NSUserKeyEquivalents -dict-add 'BTS/Edu' '^
 
 # Add keyboard shortcut: clear all categories when pressing ⌃⌘F14
 defaults write com.microsoft.Outlook NSUserKeyEquivalents -dict-add 'Clear All' '^@\UF711'
+
+# List all configured keyboard shortcuts
+defaults read com.microsoft.Outlook NSUserKeyEquivalents 
 ```
 
 After making changes, you might need to restart Outlook for the changes to take effect:
@@ -116,6 +119,84 @@ After making changes, you might need to restart Outlook for the changes to take 
 ```bash
 killall 'Microsoft Outlook'
 ```
+
+### Managing the shortcuts: `outlook-category-shortcuts` skill
+
+Instead of running `defaults` by hand, use the agent skill
+`agents/skills/outlook-category-shortcuts/` (this repo). It wraps a nushell
+script, `scripts/outlook-shortcuts.nu`, and can be invoked in Claude Code as
+`/outlook-category-shortcuts <request>` (e.g. `show`, `set F6 to P/SpecSubOptim`).
+
+Setup: the skill directory is symlinked into both skill folders.
+
+```bash
+ln -sfn ~/Projects/config/agents/skills/outlook-category-shortcuts ~/.agents/skills/outlook-category-shortcuts
+ln -sfn ~/Projects/config/agents/skills/outlook-category-shortcuts ~/.claude/skills/outlook-category-shortcuts
+```
+
+Script commands (requires macOS and [nushell](https://www.nushell.sh/)):
+
+| Goal                                   | Command                               |
+| -------------------------------------- | ------------------------------------- |
+| Grid view of layer 2 (default)         | `nu scripts/outlook-shortcuts.nu list`           |
+| Flat table: category, keys, layer/row/col | `... list --list`                  |
+| JSON for all 16 slots (used by popup)  | `... list --json`                     |
+| Bind a category to slot 1-16 (`Fn`)    | `... set 'BTS/Edu' 2`                 |
+| Replace the category already on a slot | `... set 'P/New' 2 --force`           |
+| Unbind a category                      | `... remove 'BTS/Edu'`                |
+
+Behavior:
+
+- Slot `n` maps to the layer-2 key at row `(n-1)//4+1`, col `(n-1)%4+1` and sends `⌃⌘Fn`.
+- The value stored in `NSUserKeyEquivalents` is `@^` + the Unicode character `U+F704 + (n-1)`
+  (the macOS function-key private-use range), not the literal text `\UF705`.
+  The script builds this for you.
+- `set` refuses a slot used by another category unless `--force` is given.
+- Bindings that are not in the `⌃⌘F1..F16` scheme are preserved and reported, never changed.
+- Every write saves a backup to `~/outlook-shortcuts-backup-<timestamp>.plist` and replaces
+  the whole `NSUserKeyEquivalents` dict in one `defaults write`.
+- Restart Outlook afterwards (`killall 'Microsoft Outlook'`).
+- The script only changes the Outlook side. The pad itself (layer 2 sending `⌃⌘F1..F16`) is
+  configured in VIA.
+
+### Help popup on the big knob (Hammerspoon)
+
+Pressing the big round knob on **layer 2** opens a popup showing which Outlook category is
+on which key. The popup is always current because it reads `list --json` on every press.
+
+How it fits together:
+
+1. **VIA:** the layer-2 knob press sends `LCAG(KC_H)` = `⌃⌥⌘H`. Layer 1 keeps `KC_MUTE`.
+2. **Hammerspoon** ([hammerspoon.org](https://www.hammerspoon.org/), free and open source)
+   listens for `⌃⌥⌘H`, runs the nushell script, and draws the grid in a borderless web view.
+3. **Config:** `agents/skills/outlook-category-shortcuts/hammerspoon/outlook-help.lua`.
+   Hotkey, popup timeout and the `nu` path are variables at the top of the file.
+
+Setup:
+
+```bash
+brew install --cask hammerspoon
+open -a Hammerspoon   # grant Accessibility permission in System Settings when asked
+```
+
+Create `~/.hammerspoon/init.lua`:
+
+```lua
+dofile(os.getenv("HOME") .. "/.claude/skills/outlook-category-shortcuts/hammerspoon/outlook-help.lua")
+```
+
+Then click the Hammerspoon menu bar icon and choose Reload Config.
+
+Usage: press the knob on layer 2. The popup closes on `Esc`, on pressing the knob again,
+or after 15 seconds. Pressing `⌃⌥⌘H` on a normal keyboard also works, which helps with debugging.
+
+Troubleshooting:
+
+- Nothing appears: check the Hammerspoon Console for Lua errors and confirm Accessibility
+  permission is granted.
+- Alert "outlook-shortcuts failed": the `nu` call errored; the alert shows the message.
+  The script expects nushell at `/opt/homebrew/bin/nu`.
+- Hotkey does nothing: another app may own `⌃⌥⌘H`, or the knob is not sending `LCAG(KC_H)`.
 
 ## Layer 3: Quarto / reveal.js Presentations
 
@@ -131,21 +212,21 @@ Browser (`⌘⇧F`), since it doesn't fit the 4x4 action grid either.
 
 Actions:
 
-|      | col1                     | col2                    | col3            | col4              |
-| ---- | ------------------------ | ----------------------- | --------------- | ----------------- |
-| row1 | Previous Slide           | Next Slide              | Prev (no fragments) | Next (no fragments) |
-| row2 | Jump to First Slide      | Jump to Last Slide      | Slide Overview  | Jump to Slide (G) |
-| row3 | Toggle Fullscreen        | Speaker Notes           | Pause (Black)   | Scroll View Mode  |
-| row4 | Toggle Menu              | PDF Export Mode         | Help            | (legacy: KC_F20)  |
+|      | col1                | col2               | col3                | col4                |
+| ---- | ------------------- | ------------------ | ------------------- | ------------------- |
+| row1 | Previous Slide      | Next Slide         | Prev (no fragments) | Next (no fragments) |
+| row2 | Jump to First Slide | Jump to Last Slide | Slide Overview      | Jump to Slide (G)   |
+| row3 | Toggle Fullscreen   | Speaker Notes      | Pause (Black)       | Scroll View Mode    |
+| row4 | Toggle Menu         | PDF Export Mode    | Help                | (legacy: KC_F20)    |
 
 Keyboard Shortcuts - QMK codes:
 
-|      | col1          | col2           | col3        | col4        |
-| ---- | ------------- | -------------- | ----------- | ----------- |
-| row1 | KC_LEFT       | KC_RGHT        | A(KC_LEFT)  | A(KC_RGHT)  |
-| row2 | S(KC_LEFT)    | S(KC_RGHT)     | KC_O        | KC_G        |
-| row3 | KC_F          | KC_S           | KC_B        | KC_R        |
-| row4 | KC_M          | KC_E           | S(KC_SLSH)  | KC_F20      |
+|      | col1       | col2       | col3       | col4       |
+| ---- | ---------- | ---------- | ---------- | ---------- |
+| row1 | KC_LEFT    | KC_RGHT    | A(KC_LEFT) | A(KC_RGHT) |
+| row2 | S(KC_LEFT) | S(KC_RGHT) | KC_O       | KC_G       |
+| row3 | KC_F       | KC_S       | KC_B       | KC_R       |
+| row4 | KC_M       | KC_E       | S(KC_SLSH) | KC_F20     |
 
 Row 3 side key (Search): `C(S(KC_F))`
 
