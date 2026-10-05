@@ -21,16 +21,17 @@ nu <skill-dir>/scripts/outlook-shortcuts.nu <subcommand>
 | Replace category already on that slot | `set 'P/New' 2 --force` |
 | Unbind category | `remove 'BTS/Edu'` |
 | Machine-readable, all 16 slots | `list --json` |
+| Any layer (1-4), incl. side keys | `layer 3` / `layer 3 --json` |
 
 ## Help popup (Hammerspoon)
 
-`hammerspoon/outlook-help.lua` shows the grid in a popup on `⌃⌥⌘H`. Load it from `~/.hammerspoon/init.lua`:
+`hammerspoon/outlook-help.lua` shows the current layer's keys and meanings on `⌃⌥⌘1`..`⌃⌥⌘4` (one combo per VIA layer). Content comes from `layer <n> --json`, which parses the `## Layer N:` tables in `keyboard_mappings/via/README.md`; keep that table format when editing the README. Layer 2 shows live Outlook categories. Load from `~/.hammerspoon/init.lua`:
 
 ```lua
 dofile(os.getenv("HOME") .. "/.claude/skills/outlook-category-shortcuts/hammerspoon/outlook-help.lua")
 ```
 
-The pad's layer-2 knob press must send `LCAG(KC_H)`; set that in VIA (Key tester / Encoders). Hammerspoon needs Accessibility permission.
+The knob press (row 3 side key) on each layer must send `LCAG(KC_<layer>)`; set in VIA or load `kb16_01.layout.json`. Hammerspoon needs Accessibility permission.
 
 ## Rules
 

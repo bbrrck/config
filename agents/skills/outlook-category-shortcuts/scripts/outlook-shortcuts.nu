@@ -60,8 +60,79 @@ def write-all [pairs: list<record<category: string, value: string>>] {
     }
 }
 
+# VIA README holds the per-layer key meanings (single source of truth).
+# Override with VIA_README; default is found relative to this script (works through symlinks).
+def readme-path []: nothing -> string {
+    $env.VIA_README? | default (
+        $env.CURRENT_FILE? | default $nu.current-exe
+        | path expand
+        | path dirname | path dirname | path dirname | path dirname | path dirname
+        | path join "keyboard_mappings" "via" "README.md"
+    )
+}
+
+# Lines of "## Layer N: ..." section, heading included.
+def layer-lines [n: int]: nothing -> list<string> {
+    let all = (open --raw (readme-path) | lines)
+    let hits = ($all | enumerate | where {|r| $r.item | str starts-with $"## Layer ($n):" })
+    if ($hits | is-empty) {
+        error make {msg: $"no '## Layer ($n):' section in (readme-path)"}
+    }
+    let rest = ($all | skip ($hits.0.index + 1))
+    [($all | get $hits.0.index)] | append ($rest | take while {|l| not ($l | str starts-with "## ") })
+}
+
+# First markdown table after a marker line -> rows of cells (row label and header/separator dropped).
+def parse-table [lines: list<string>, marker: string]: nothing -> list<list<string>> {
+    $lines
+    | skip until {|l| ($l | str trim) == $marker }
+    | skip 1
+    | skip until {|l| $l | str starts-with "|" }
+    | take while {|l| $l | str starts-with "|" }
+    | skip 2
+    | each {|l| $l | str trim | split row "|" | skip 1 | drop 1 | each {|c| $c | str trim } | skip 1 }
+}
+
+# Show one layer: 4 rows x 5 cols (4 grid keys + side key). Layer 2 shows live Outlook categories.
+def "main layer" [n: int, --json (-j)] {
+    let lines = (layer-lines $n)
+    let title = ($lines.0 | str replace "## " "")
+    let actions = (parse-table $lines "Actions:")
+    let keys = (parse-table $lines "Keyboard Shortcuts - MacOS keys:")
+    let slots = (if $n == $VIA_LAYER { read-slots } else { [] })
+
+    let rows = (
+        0..3 | each {|r|
+            0..4 | each {|c|
+                let slot = $r * 4 + $c + 1
+                let cat = (if $n == $VIA_LAYER and $c < 4 {
+                    $slots | where slot == $slot | get category | first | default null
+                } else { null })
+                let is_cat_slot = ($n == $VIA_LAYER and $c < 4)
+                {
+                    action: (if $is_cat_slot { $cat | default "(free)" } else { $actions | get $r | get $c })
+                    keys: ($keys | get $r | get $c)
+                    dim: ($is_cat_slot and $cat == null)
+                    side: ($c == 4)
+                }
+            }
+        }
+    )
+
+    if $json {
+        {layer: $n, title: $title, rows: $rows} | to json | print
+    } else {
+        print $title
+        $rows
+        | each {|row|
+            $row | enumerate | reduce --fold {} {|it, acc| $acc | insert $"col($it.index + 1)" $"($it.item.keys)\n($it.item.action)" }
+        }
+        | print
+    }
+}
+
 def main [] {
-    print "usage: outlook-shortcuts.nu list [--list] | set <category> <slot 1-16> [--force] | remove <category>"
+    print "usage: outlook-shortcuts.nu list [--list|--json] | layer <1-4> [--json] | set <category> <slot 1-16> [--force] | remove <category>"
 }
 
 # Show shortcuts. Default: 4x4 grid of VIA layer 2. --list: flat table. --json: all 16 slots, machine-readable.
