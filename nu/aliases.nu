@@ -54,6 +54,11 @@ alias tf = terraform
 alias ch = codechecks
 alias cc = claude
 
+# --- Zurich GPT-5.6 Sol ---
+alias claude-sol = claude --settings /Users/TIBOR.STANKO/.claude/sol-settings.json
+alias ccs = claude-sol
+# --- end Zurich GPT-5.6 Sol ---
+
 def admire [] {
     cd $PATH_ADMIRE
     uv run admire
@@ -66,6 +71,11 @@ def par [] {
     uv run par
 }
 
+# Load the VIA layout onto the Megalodon macro pad (see keyboard_mappings/via/README.md)
+def --wrapped via-load [...args] {
+    uv run ($"($PATH_PROJECTS)/config/keyboard_mappings/via/via_load.py" | path expand) ...$args
+}
+
 def reload [] {
     exec nu
 }
@@ -75,3 +85,4 @@ alias j = just
 alias dbxdv = databricks -p dnacommondbwsp02n1d02
 alias dbxqa = databricks -p dnacommondbwsp02n1q02
 alias dbxpr = databricks -p dnacommondbwsp02p1p02
+

@@ -18,6 +18,47 @@ QMK reference for modifier keys:
 
 For full reference, see [docs.qmk.fm/keycodes](https://docs.qmk.fm/keycodes)
 
+## Loading the layout from the terminal
+
+`via_load.py` writes `kb16_01.layout.json` straight to the pad over raw HID. You don't
+need the VIA app. It shows what will change, writes the keymap and the knob bindings,
+then reads them back to verify.
+
+```sh
+uv run via_load.py --dry-run   # show the changes, write nothing
+uv run via_load.py             # write and verify
+uv run via_load.py other.json  # load a different layout file
+```
+
+Limits:
+
+- The script doesn't write macros. They are all empty in this layout, and the script
+  warns if a layout has some.
+- It only knows the keycodes this layout uses: basic keys, F1-F24, media, modifier
+  wrappers, layer functions and `RGB_*`. Unknown names stop the load before anything
+  is written. Raw hex like `0x7E00` also works.
+- Keycodes use QMK's current numbering (`TO(n)` = `0x52xx`, `RGB_*` = `0x78xx`). The
+  board's firmware reports VIA protocol 11 but stores these values.
+
+Tests: `uv run --with pytest --with hidapi pytest test_via_load.py`.
+
+### Reload button on the pad (Hammerspoon)
+
+Pushing the right wheel (layer 1, row 2 side key) sends `LCAG(KC_R)` = `⌃⌥⌘R`. The other
+layers have `KC_TRNS` there, so the button works on every layer.
+`hammerspoon/via-reload.lua` listens for `⌃⌥⌘R`, runs `uv run via_load.py`, and shows the
+result as an alert. The alert says either "Board already matches the layout." or the number
+of changes followed by "Written and verified."
+
+Setup: add this line to `~/.hammerspoon/init.lua`, then reload the Hammerspoon config:
+
+```lua
+dofile(os.getenv("HOME") .. "/Projects/config/keyboard_mappings/via/hammerspoon/via-reload.lua")
+```
+
+The button only exists after the layout is on the pad. Run `uv run via_load.py` once by hand
+the first time.
+
 ## Layer 1: Rectangle (Rct) & Misc
 
 Actions:
@@ -25,7 +66,7 @@ Actions:
 |      | col1                               | col2               | col3                     | col4                | side                |
 | ---- | ---------------------------------- | ------------------ | ------------------------ | ------------------- | ------------------- |
 | row1 | Rect - Previous Display            | Rect - Top Left    | Rect - Top Half          | Rect - Top Right    | Go to Layer 4 (RGB) |
-| row2 | Rect - Maximize                    | Rect - Left Half   | Rect - Center Half       | Rect - Right Half   | Go to Layer 2       |
+| row2 | Rect - Maximize                    | Rect - Left Half   | Rect - Center Half       | Rect - Right Half   | Reload VIA layout   |
 | row3 | Rect - Next Display                | Rect - Bottom Left | Rect - Bottom Half       | Rect - Bottom Right | Help popup          |
 | row4 | Screenshot: Selection to Clipboard | Paste              | Paste without formatting | Esc                 | (none)              |
 
@@ -34,7 +75,7 @@ Keyboard Shortcuts - QMK codes:
 |      | col1          | col2             | col3          | col4             | side       |
 | ---- | ------------- | ---------------- | ------------- | ---------------- | ---------- |
 | row1 | LCAG(KC_LEFT) | C(G(KC_LEFT))    | LAG(KC_UP)    | C(G(KC_RGHT))    | TO(3)      |
-| row2 | LAG(KC_F)     | LAG(KC_LEFT)     | LCAG(KC_UP)   | LAG(KC_RGHT)     | TO(1)      |
+| row2 | LAG(KC_F)     | LAG(KC_LEFT)     | LCAG(KC_UP)   | LAG(KC_RGHT)     | LCAG(KC_R) |
 | row3 | LCAG(KC_RGHT) | C(S(G(KC_LEFT))) | LAG(KC_DOWN)  | C(S(G(KC_RGHT))) | LCAG(KC_1) |
 | row4 | C(S(G(KC_4))) | G(KC_V)          | S(A(G(KC_V))) | KC_ESC           | KC_NO      |
 
@@ -43,7 +84,7 @@ Keyboard Shortcuts - MacOS keys:
 |      | col1 | col2 | col3 | col4 | side    |
 | ---- | ---- | ---- | ---- | ---- | ------- |
 | row1 | ⌃⌥⌘← | ⌃⌘←  | ⌥⌘↑  | ⌃⌘→  | layer 4 |
-| row2 | ⌥⌘F  | ⌥⌘←  | ⌃⌥⌘↑ | ⌥⌘→  | layer 2 |
+| row2 | ⌥⌘F  | ⌥⌘←  | ⌃⌥⌘↑ | ⌥⌘→  | ⌃⌥⌘R    |
 | row3 | ⌃⌥⌘→ | ⌃⇧⌘← | ⌃⌘↓  | ⌃⇧⌘→ | ⌃⌥⌘1    |
 | row4 | ⌃⇧⌘4 | ⌘V   | ⇧⌥⌘V | ESC  | -       |
 
@@ -54,7 +95,7 @@ Actions:
 |      | col1                      | col2                      | col3                      | col4                      | side          |
 | ---- | ------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------- |
 | row1 | Assign Category #1 (F1)   | Assign Category #2 (F2)   | Assign Category #3 (F3)   | Assign Category #4 (F4)   | Go to Layer 1 |
-| row2 | Assign Category #5 (F5)   | Assign Category #6 (F6)   | Assign Category #7 (F7)   | Assign Category #8 (F8)   | Go to Layer 3 |
+| row2 | Assign Category #5 (F5)   | Assign Category #6 (F6)   | Assign Category #7 (F7)   | Assign Category #8 (F8)   | Reload VIA layout |
 | row3 | Assign Category #9 (F9)   | Assign Category #10 (F10) | Assign Category #11 (F11) | Assign Category #12 (F12) | Help popup    |
 | row4 | Assign Category #13 (F13) | Assign Category #14 (F14) | Assign Category #15 (F15) | Assign Category #16 (F16) | (none)        |
 
@@ -63,7 +104,7 @@ Keyboard Shortcuts - QMK codes:
 |      | col1         | col2         | col3         | col4         | side       |
 | ---- | ------------ | ------------ | ------------ | ------------ | ---------- |
 | row1 | C(G(KC_F1))  | C(G(KC_F2))  | C(G(KC_F3))  | C(G(KC_F4))  | TO(0)      |
-| row2 | C(G(KC_F5))  | C(G(KC_F6))  | C(G(KC_F7))  | C(G(KC_F8))  | TO(2)      |
+| row2 | C(G(KC_F5))  | C(G(KC_F6))  | C(G(KC_F7))  | C(G(KC_F8))  | KC_TRNS    |
 | row3 | C(G(KC_F9))  | C(G(KC_F10)) | C(G(KC_F11)) | C(G(KC_F12)) | LCAG(KC_2) |
 | row4 | C(G(KC_F13)) | C(G(KC_F14)) | C(G(KC_F15)) | C(G(KC_F16)) | KC_NO      |
 
@@ -72,7 +113,7 @@ Keyboard Shortcuts - MacOS keys:
 |      | col1  | col2  | col3  | col4  | side    |
 | ---- | ----- | ----- | ----- | ----- | ------- |
 | row1 | ⌃⌘F1  | ⌃⌘F2  | ⌃⌘F3  | ⌃⌘F4  | layer 1 |
-| row2 | ⌃⌘F5  | ⌃⌘F6  | ⌃⌘F7  | ⌃⌘F8  | layer 3 |
+| row2 | ⌃⌘F5  | ⌃⌘F6  | ⌃⌘F7  | ⌃⌘F8  | ⌃⌥⌘R    |
 | row3 | ⌃⌘F9  | ⌃⌘F10 | ⌃⌘F11 | ⌃⌘F12 | ⌃⌥⌘2    |
 | row4 | ⌃⌘F13 | ⌃⌘F14 | ⌃⌘F15 | ⌃⌘F16 | -       |
 
@@ -174,7 +215,7 @@ keys with their meanings. Every layer has its own combo, so the popup knows whic
 How it fits together:
 
 1. **VIA:** the knob key on each layer sends `⌃⌥⌘` + the layer number (table above).
-   `kb16_01.layout.json` in this folder has these keycodes; load it in VIA to apply.
+   `kb16_01.layout.json` in this folder has these keycodes; apply it with `uv run via_load.py` (or in VIA).
    The old knob bindings (layer 1 `C(KC_R)`, layer 3 Search `C(S(KC_F))`) are gone.
 2. **Hammerspoon** ([hammerspoon.org](https://www.hammerspoon.org/), free and open source)
    listens for `⌃⌥⌘1..4`, runs `outlook-shortcuts.nu layer <n> --json`, and draws the
@@ -233,7 +274,7 @@ Actions:
 |      | col1                | col2               | col3                | col4                | side                          |
 | ---- | ------------------- | ------------------ | ------------------- | ------------------- | ----------------------------- |
 | row1 | Previous Slide      | Next Slide         | Prev (no fragments) | Next (no fragments) | Go to Layer 2                 |
-| row2 | Jump to First Slide | Jump to Last Slide | Slide Overview      | Jump to Slide (G)   | Go to Layer 4 (RGB)           |
+| row2 | Jump to First Slide | Jump to Last Slide | Slide Overview      | Jump to Slide (G)   | Reload VIA layout             |
 | row3 | Toggle Fullscreen   | Speaker Notes      | Pause (Black)       | Scroll View Mode    | Help popup                    |
 | row4 | Toggle Menu         | PDF Export Mode    | Help                | (legacy: KC_F20)    | Toggle Full Screen in Browser |
 
@@ -242,7 +283,7 @@ Keyboard Shortcuts - QMK codes:
 |      | col1       | col2       | col3       | col4       | side       |
 | ---- | ---------- | ---------- | ---------- | ---------- | ---------- |
 | row1 | KC_LEFT    | KC_RGHT    | A(KC_LEFT) | A(KC_RGHT) | TO(1)      |
-| row2 | S(KC_LEFT) | S(KC_RGHT) | KC_O       | KC_G       | TO(3)      |
+| row2 | S(KC_LEFT) | S(KC_RGHT) | KC_O       | KC_G       | KC_TRNS    |
 | row3 | KC_F       | KC_S       | KC_B       | KC_R       | LCAG(KC_3) |
 | row4 | KC_M       | KC_E       | S(KC_SLSH) | KC_F20     | G(S(KC_F)) |
 
@@ -251,7 +292,7 @@ Keyboard Shortcuts - MacOS keys:
 |      | col1 | col2 | col3 | col4 | side    |
 | ---- | ---- | ---- | ---- | ---- | ------- |
 | row1 | ←    | →    | ⌥←   | ⌥→   | layer 2 |
-| row2 | ⇧←   | ⇧→   | O    | G    | layer 4 |
+| row2 | ⇧←   | ⇧→   | O    | G    | ⌃⌥⌘R    |
 | row3 | F    | S    | B    | R    | ⌃⌥⌘3    |
 | row4 | M    | E    | ⇧/   | -    | ⌘⇧F     |
 
@@ -264,7 +305,7 @@ Actions:
 |      | col1                | col2                | col3                | col4                | side                |
 | ---- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
 | row1 | RGB Speed +         | RGB Speed -         | -                   | -                   | Go to Layer 3       |
-| row2 | RGB Saturation +    | RGB Saturation -    | -                   | -                   | Go to Layer 1       |
+| row2 | RGB Saturation +    | RGB Saturation -    | -                   | -                   | Reload VIA layout   |
 | row3 | RGB Toggle          | RGB Next Mode       | RGB Hue +           | -                   | Help popup          |
 | row4 | -                   | RGB Brightness +    | RGB Hue -           | RGB Brightness -    | (none)              |
 
@@ -273,7 +314,7 @@ Keyboard Shortcuts - QMK codes:
 |      | col1     | col2     | col3    | col4    | side       |
 | ---- | -------- | -------- | ------- | ------- | ---------- |
 | row1 | RGB_SPI  | RGB_SPD  | KC_TRNS | KC_TRNS | TO(2)      |
-| row2 | RGB_SAI  | RGB_SAD  | KC_TRNS | KC_TRNS | TO(0)      |
+| row2 | RGB_SAI  | RGB_SAD  | KC_TRNS | KC_TRNS | KC_TRNS    |
 | row3 | RGB_TOG  | RGB_MOD  | RGB_HUI | KC_TRNS | LCAG(KC_4) |
 | row4 | KC_TRNS  | RGB_VAI  | RGB_HUD | RGB_VAD | KC_NO      |
 
@@ -282,6 +323,6 @@ Keyboard Shortcuts - MacOS keys:
 |      | col1    | col2    | col3    | col4    | side    |
 | ---- | ------- | ------- | ------- | ------- | ------- |
 | row1 | SPD +   | SPD -   | -       | -       | layer 3 |
-| row2 | SAT +   | SAT -   | -       | -       | layer 1 |
+| row2 | SAT +   | SAT -   | -       | -       | ⌃⌥⌘R    |
 | row3 | RGB     | MODE    | HUE +   | -       | ⌃⌥⌘4    |
 | row4 | -       | VAL +   | HUE -   | VAL -   | -       |

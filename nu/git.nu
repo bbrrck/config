@@ -1,15 +1,19 @@
 # Git Worktree shortcuts
 
 def "gw ls" [] {
-    print "-------------"
-    print "Git branches:"
-    print "-------------"
-    git branch --all
-    print ""
-    print "--------------"
-    print "Git worktrees:"
-    print "--------------"
-    git worktree list
+    let cwd = $env.PWD
+    ^git worktree list --porcelain
+    | split row "\n\n"
+    | where {|r| $r | str trim | is-not-empty }
+    | each {|r|
+        let f = $r | lines | parse "{key} {value}" | transpose -r -d
+        let p = $f.worktree
+        {
+            path: (if $p == $cwd { "." } else if ($p | str starts-with $"($cwd)/") { $p | path relative-to $cwd } else { $p })
+            head: ($f.HEAD | str substring 0..7)
+            branch: ($f.branch? | default "(detached)" | str replace "refs/heads/" "")
+        }
+    }
 }
 
 def --env "gw add" [branch: string, from: string = "main"] {
